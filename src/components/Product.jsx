@@ -1,8 +1,17 @@
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
+import { CartContext } from "../context/CartContext";
 
-export const Product = ({id, name, description, price}) => {
+
+export const Product = ({ id, name, description, price }) => {
+	
+	const { isLoggedIn } = useContext(UserContext)
+	const {addToCart}= useContext(CartContext)
 
 	const handleBuy = () => {
-		console.log(`Product ${id} added to cart`)
+		//console.log(`Product ${id} added to cart`)
+		addToCart({id, name, price})
+
 	}
 
 	return (
@@ -11,6 +20,7 @@ export const Product = ({id, name, description, price}) => {
 			<p>{description}</p>
 			<p><strong>{price}</strong></p>
 			{ /* chceme jen pro prihlasene */
+				isLoggedIn && 
 				<button onClick={handleBuy}>Buy</button>
 			}
 		</div>
